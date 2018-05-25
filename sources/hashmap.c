@@ -34,24 +34,25 @@ int has(struct hashmap *hashmap, const char *key)
 
 int del(struct hashmap **hashmap, const char *key, void (*free_it)(void *))
 {
-	hash_t h = hash(key);
-	struct hashmap **temp = 0x0;
+         hash_t h = hash(key);
+         struct hashmap **temp = 0x0;
+         struct hashmap **prev = 0x0;
 
-	if (*hashmap == 0x0)
-		return (1);
-	for (temp = hashmap; *temp; temp = &((*temp)->next)) {
-		if ((*temp)->hash == h)
-			break;
-	}
-	if (*temp == 0x0)
-		return (1);
-	free_it((*temp)->data);
-	free((*temp)->key);
-	if ((*temp)->next)
-		(*temp)->next->prev = (*temp)->prev;
-	if ((*temp)->prev)
-		(*temp)->prev->next = (*temp)->next;
-	return (0);
+         if (*hashmap == 0x0)
+                 return (1);
+         for (temp = hashmap; *temp; temp = &((*temp)->next)) {
+                 if ((*temp)->hash == h)
+                         break;
+                 *prev = (*temp)->next;
+         }
+         if (*temp == 0x0)
+                 return (1);
+         free_it((*temp)->data);
+         free((*temp)->key);
+         if ((*temp)->next)
+                 (*temp)->next->prev = (*temp)->prev;
+         prev = &(*temp)->next;
+         return (0);
 }
 
 int add(struct hashmap **hashmap, const char *key, void *data)
