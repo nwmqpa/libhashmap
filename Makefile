@@ -15,13 +15,13 @@ SYM_PRE =  	--redefine-sym add=hashmap_add \
 	  	--redefine-sym del=hashmap_del \
 	  	--redefine-sym get=hashmap_get \
 	  	--redefine-sym has=hashmap_has \
-	  	--redefine-sym hash=hashmap_hash \
+	  	--redefine-sym hm_free=hashmap_free \
 
 SYM_NAM = 	-K hashmap_add \
 		-K hashmap_del \
 		-K hashmap_get \
 		-K hashmap_has \
-		-K hashmap_hash
+		-K hashmap_free
 
 
 NAME	=	libhashmap.so

@@ -12,6 +12,20 @@ To install the lib on linux, clone the repo and make the project or use the bina
 
 ---
 
+### Changelog
+
+* v1.0
+
+  Initial release
+
+* v1.1
+
+  Removed hashmap_hash from exposed functions.
+
+  Added hashmap_free to functions.
+
+---
+
 ### Usage
 
 This library has, (at the v1.0) 4 functions :
@@ -21,6 +35,7 @@ int hashmap_has(struct hashmap *map, const char *key);
 int hashmap_del(struct hashmap **map, const char *key, void (*fr)(void *));
 int hashmap_add(struct hashmap **map, const char *key, void *data);
 void *hashmap_get(struct hashmap *map, const char *key);
+void hashmap_free(struct hashmap *map, void (*free_it)(void *));
 ```
 
 This functions helps you manage your Hashmap all way along.
@@ -56,6 +71,14 @@ It will save the data using the key as the way to get it with the next function.
 This simple function takes in a map and a key in parameter.
 
 it will get the (void *) pointer on the data given the key it was added before with.
+
+---
+
+### HASHMAP_FREE
+
+This simple function takes in a map and a function pointer in parameter.
+
+it will free the hashmap using the function pointer on data.
 
 ---
 

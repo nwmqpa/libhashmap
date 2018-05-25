@@ -8,19 +8,6 @@
 #include "outter.h"
 #include "inner.h"
 
-hash_t hash(const char *str)
-{
-	unsigned long int hash = 5381;
-	char c;
-
-	while (*str) {
-		c = *str;
-		hash = ((hash << 5) + hash) + c;
-		str++;
-	}
-	return (hash);
-}
-
 int has(struct hashmap *hashmap, const char *key)
 {
 	hash_t h = hash(key);
@@ -85,4 +72,22 @@ void *get(struct hashmap *hashmap, const char *key)
 			return (temp->data);
 	}
 	return (0x0);
+}
+
+void hm_free(struct hashmap **hashmap, void (*free_it)(void *))
+{
+	struct hashmap *temp = *hashmap;
+
+	for (; temp->next; temp = temp->next) {
+		if (temp->prev)
+			free(temp->prev);
+		free_it(temp->data);
+		free(temp->key);
+	}
+	if (temp->prev)
+		free(temp->prev);
+	free_it(temp->data);
+	free(temp->key);
+	free(temp);
+	*hashmap = 0x0;
 }
