@@ -7,6 +7,8 @@
 
 #include "outter.h"
 #include "inner.h"
+#include <string.h>
+#include <stdlib.h>
 
 hash_t hash(const char *str)
 {
@@ -71,8 +73,8 @@ int add(struct hashmap **hashmap, const char *key, void *data)
 	(*temp)->next = 0x0;
 	(*temp)->hash = h;
 	(*temp)->data = data;
-	(*temp)->key = my_calloc(my_strlen(key) + 1);
-	my_memcpy((*temp)->key, key, my_strlen(key));
+	(*temp)->key = calloc(my_strlen(key) + 1, sizeof(char));
+	my_memcpy((*temp)->key, key, strlen(key));
 	return (0);
 }
 
